@@ -1,0 +1,9 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+
+ //corpo da requisição => body
+{
+    "email": "partner1@user.com",
+    "password": "secret"
+}
