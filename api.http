@@ -38,7 +38,7 @@ Content-Type: application/json
 {   "name": "Partner 1",
     "description": "descrição do evento",
     "date": "2025-01-01T",
-    "location":
+    "location": "São Paulo"
 }
 
 
