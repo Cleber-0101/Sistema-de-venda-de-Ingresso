@@ -39,7 +39,7 @@ app.post('/events', (req, res) => {
 
 // Buscando Evento
 app.get('/events', (req, res) => {
-    
+    const {name , description, date}
 })
 
 //Buscando evento por ID
