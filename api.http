@@ -38,8 +38,14 @@ Content-Type: application/json
 {   "name": "Partner 1",
     "description": "descrição do evento",
     "date": "2025-01-01T",
-    "location": "São Paulo"
+    "location" : "Rua x, bairro Etc"
 }
 
 
+###
+GET http://localhost:3000/events
 
+
+
+###
+GET http://localhost:3000/events/1000
