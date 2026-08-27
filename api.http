@@ -31,11 +31,11 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/events
+POST http://localhost:3000/partners/events
 Content-Type: application/json
 
  //corpo da requisição => body
-{   "name": "Partner 1",
+{   "name": "Evento teste 1",
     "description": "descrição do evento",
     "date": "2025-01-01T",
     "location" : "Rua x, bairro Etc"
@@ -43,8 +43,16 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/events
+GET http://localhost:3000/partners/events
 
+
+###
+GET http://localhost:3000/partners/events/1000
+
+
+
+###
+GET http://localhost:3000/events
 
 
 ###
