@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `partners` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `partners` (
   INDEX `fk_partners_users1_idx` (`users_id` ASC) VISIBLE,
   CONSTRAINT `fk_partners_users1`
     FOREIGN KEY (`users_id`)
-    REFERENCES .`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   INDEX `fk_customers_users_idx` (`users_id` ASC) VISIBLE,
   CONSTRAINT `fk_customers_users`
     FOREIGN KEY (`users_id`)
-    REFERENCES .`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS `events` (
   INDEX `fk_events_partners1_idx` (`partner_id` ASC) VISIBLE,
   CONSTRAINT `fk_events_partners1`
     FOREIGN KEY (`partner_id`)
-    REFERENCES .`partners` (`id`)
+    REFERENCES `partners` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 
 
