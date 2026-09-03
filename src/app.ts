@@ -2,7 +2,7 @@
 // Rotas, requisições e middlewares
 import express from 'express';
 
-//iniciando 
+//iniciando express
 const app = express()
 
 //Criando end points
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.json({ message: "teste de rota" })
 })
 
-//autenticação do usuario
+//autenticação do usuario preciso testar    
 //POST = criação 
 app.post('/auth/login', (req, res) => {
     //pegando os dados no corpo da requisição
