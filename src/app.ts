@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.json({ message: "teste de rota" })
 })
 
-//autenticação do usuario preciso testar    
+//autenticação do usuario preciso ainda criar  
 //POST = criação 
 app.post('/auth/login', (req, res) => {
     //pegando os dados no corpo da requisição
@@ -23,7 +23,7 @@ app.post('/auth/login', (req, res) => {
     res.send()
 })
 
-//Parceiros 
+//Parceiros t
 app.post('/partners', (req, res) => {
     const { name, email, password, company_name } = req.body
 })
