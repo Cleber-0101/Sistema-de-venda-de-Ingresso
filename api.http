@@ -48,11 +48,8 @@ GET http://localhost:3000/partners/events
 ### ### Listagem de um ebento do parceiro 
 GET http://localhost:3000/partners/events/1000
 
-
-
 ### ### 
 GET http://localhost:3000/events
-
 
 ###
 GET http://localhost:3000/events/1000

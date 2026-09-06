@@ -5,9 +5,7 @@ import express from 'express';
 //iniciando express
 const app = express()
 
-//Criando end points
-//Configuração para receber um json e tranforma em Objeto 
-//para eu pode manipular esses dados
+//pega o json que chegou na requsição http, faz o parse  dele e coloca o resultado em req.body como um objeto javascript
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -20,15 +18,17 @@ app.post('/auth/login', (req, res) => {
     //pegando os dados no corpo da requisição
     const { email, password } = req.body;
     console.log(email, password)
+    //
+    //sende sendo usando para enviar de volta uma resposta para o cliente, nesse caso estou enviando um json
     res.send()
 })
 
-//Parceiros t
+//criando parceiro
 app.post('/partners', (req, res) => {
     const { name, email, password, company_name } = req.body
 })
 
-//Consumidor-clientes
+//Criando Consumidor-clientes
 app.post('/customers', (req, res) => {
     const { name, email, password, address, telefone } = req.body
 })
@@ -38,7 +38,7 @@ app.post('/partners/events', (req, res) => {
     const { name, description, date, location } = req.body
 })
 
-// buscando dados dos eventos 
+// Buscando dados dos eventos 
 app.get('/partners/events', (req, res) => {
 
 })
@@ -50,14 +50,13 @@ app.get('/events/:eventId', (req, res) => {
     res.send();
 })
 
-// listagem de eventos 
-// Buscando Evento
+// listagem de eventos - buscando eventos de um parceiro especifico
 app.get('/partners/events', (req, res) => {
     const {name , description, date} = req.body
 })
 
 //Buscando evento por ID
-app.get('/parteners/events/:eventId', (req, res) => {
+app.get('/partners/events/:eventId', (req, res) => {
     const {eventId} = req.params
     console.log(eventId)
     res.send();

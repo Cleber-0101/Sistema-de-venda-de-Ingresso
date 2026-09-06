@@ -1,14 +1,14 @@
 {
   "name": "venda de ingresso",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projeto para vender ingressos em eventos",
   "main": "src/app.ts",
   "scripts": {
     "dev": "nodemon --exec tsx src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cleber Students Software enginner ",
   "license": "ISC",
   "type": "module",
   "dependencies": {
