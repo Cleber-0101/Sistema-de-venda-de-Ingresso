@@ -1,6 +1,19 @@
 //Vai fornecer recursos para poder construir APis HTTP 
 // Rotas, requisições e middlewares
 import express from 'express';
+import * as mysql from 'mysql2/promise'
+
+
+//criando conexão com o banco de dados
+function createConnection() {
+    return mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'tickets'
+    });
+}
+
 
 //iniciando express
 const app = express()
@@ -24,8 +37,18 @@ app.post('/auth/login', (req, res) => {
 })
 
 //criando parceiro
-app.post('/partners', (req, res) => {
+app.post('/partners', async (req, res) => {
     const { name, email, password, company_name } = req.body
+
+    const connection = await createConnection();
+
+    const creadtedAT = new Date()
+
+    //Usuario
+    connection.execute('INSERT INTO users (name, email, password, user_id, created_at)', [name, email, password, company_name])
+
+    //Parceiro
+    connection.execute('INSERT INTO partners (user_id, company_name, created_at)', [name, email, password, company_name])
 })
 
 //Criando Consumidor-clientes
