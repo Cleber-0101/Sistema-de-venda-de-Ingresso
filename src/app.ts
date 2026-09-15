@@ -31,9 +31,8 @@ app.post('/auth/login', (req, res) => {
     //pegando os dados no corpo da requisição
     const { email, password } = req.body;
     console.log(email, password)
-    //
     //sende sendo usando para enviar de volta uma resposta para o cliente, nesse caso estou enviando um json
-    res.send()
+    res.send("Login efeturado com sucesso! ")
 })
 
 //criando parceiro
@@ -45,10 +44,10 @@ app.post('/partners', async (req, res) => {
     const creadtedAT = new Date()
 
     //Usuario
-    connection.execute('INSERT INTO users (name, email, password, user_id, created_at)', [name, email, password, company_name])
+    connection.execute('INSERT INTO users (name, email, password, user_id, created_at)', [name, email, password, company_name ,creadtedAT])
 
     //Parceiro
-    connection.execute('INSERT INTO partners (user_id, company_name, created_at)', [name, email, password, company_name])
+    connection.execute('INSERT INTO partners (user_id, company_name, created_at)', [name, email, password, company_name , creadtedAT])
 })
 
 //Criando Consumidor-clientes
