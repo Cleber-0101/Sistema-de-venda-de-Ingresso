@@ -4,7 +4,7 @@
   "description": "Projeto para vender ingressos em eventos",
   "main": "src/app.ts",
   "scripts": {
-    "dev": "nodemon --exec tsx src/app.ts",
+    "dev": "nodemon --exec \"tsx --env-file=.env\" src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "mysql2": "^3.24.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",

@@ -2,15 +2,17 @@
 // Rotas, requisições e middlewares
 import express from 'express';
 import * as mysql from 'mysql2/promise'
+import bcrypt from 'bcrypt'
 
 
 //criando conexão com o banco de dados
 function createConnection() {
     return mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'tickets'
+        host: process.env.DB_HOST ?? 'localhost',
+        port: Number(process.env.DB_PORT ?? 3306),
+        user: process.env.DB_USER ?? 'root',
+        password: process.env.DB_PASSWORD ?? 'root',
+        database: process.env.DB_DATABASE ?? 'tickets'
     });
 }
 
@@ -35,56 +37,79 @@ app.post('/auth/login', (req, res) => {
     res.send("Login efeturado com sucesso! ")
 })
 
-//criando parceiro
+//criando conexoes com o banco de dados e inserindo dados na tabela users e partners
 app.post('/partners', async (req, res) => {
-    const { name, email, password, company_name } = req.body
-
     const connection = await createConnection();
 
-    const creadtedAT = new Date()
+    try {
+        const { name, email, password, company_name } = req.body
+        const creadtedAT = new Date()
 
-    //Usuario
-    connection.execute('INSERT INTO users (name, email, password, user_id, created_at)', [name, email, password, company_name ,creadtedAT])
+        //dados que irei criptografar
+        const hashedPassword = await bcrypt.hash(password, 10)
 
-    //Parceiro
-    connection.execute('INSERT INTO partners (user_id, company_name, created_at)', [name, email, password, company_name , creadtedAT])
+        //Usuario
+        const [userResult] = await connection.execute<mysql.ResultSetHeader>('INSERT INTO users (name, email, password, created_at) VALUES (?, ?, ?, ?)', [name, email, hashedPassword, creadtedAT])
+        const userId = userResult.insertId
+
+        //Parceiro
+        const [partnerResult] = await connection.execute<mysql.ResultSetHeader>('INSERT INTO partners (users_id, company_name, created_at) VALUES (?, ?, ?)',
+            [userId, company_name, creadtedAT])
+
+        //representando a resposta que será enviada para o cliente, nesse caso estou enviando um json
+        res.status(201)
+            .json({ message: 'Parceiro criado com sucesso', partnerId: partnerResult.insertId, company_name, created_at: creadtedAT })
+    } catch (error) {
+        console.error('Erro ao criar parceiro:', error)
+        res.status(500).json({ message: 'Erro ao criar parceiro' })
+    } finally {
+        await connection.end()
+    }
 })
 
+
+
+//rotas 
 //Criando Consumidor-clientes
 app.post('/customers', (req, res) => {
-    const { name, email, password, address, telefone } = req.body
+    res.status(501).json({ message: 'Cadastro de clientes ainda não implementado' })
 })
 
 //Criando evento
 app.post('/partners/events', (req, res) => {
-    const { name, description, date, location } = req.body
-})
-
-// Buscando dados dos eventos 
-app.get('/partners/events', (req, res) => {
-
+    res.status(501).json({ message: 'Cadastro de eventos ainda não implementado' })
 })
 
 //Buscando evento por ID
 app.get('/events/:eventId', (req, res) => {
-    const {eventId} = req.params
+    const { eventId } = req.params
     console.log(eventId)
     res.send();
 })
 
 // listagem de eventos - buscando eventos de um parceiro especifico
 app.get('/partners/events', (req, res) => {
-    const {name , description, date} = req.body
+    res.json([])
 })
 
 //Buscando evento por ID
 app.get('/partners/events/:eventId', (req, res) => {
-    const {eventId} = req.params
+    const { eventId } = req.params
     console.log(eventId)
     res.send();
 })
 
-app.listen(3000, () => {
+app.get('/events', (req, res) => {
+    res.json([])
+})
+
+app.listen(3000, async () => {
+    //ISSO LIMPA AS TABELAS DO BANCO DE DADOS, PARA QUE EU POSSA TESTAR SEM PRECISAR FICAR CRIANDO USUARIOS E PARCEIROS NOVAMENTE
+    const connection = await createConnection();
+    await connection.execute("TRUNCATE TABLE users")
+    await connection.execute("TRUNCATE TABLE partners")
+    await connection.execute("TRUNCATE TABLE events")
+    await connection.execute("TRUNCATE TABLE customers")
     console.log('rodando na porta http://localhost:3000')
 })
 
